@@ -47,3 +47,58 @@ def DisplayForm():
     #label for heading
     lbl_text = Label(TopViewForm, text="Student Management System", font=('verdana', 18), width=600,bg="#1C2833",fg="white")
     lbl_text.pack(fill=X)
+    #creating registration form in first left frame
+    Label(LFrom, text="Name  ", font=("Arial", 12)).pack(side=TOP)
+    Entry(LFrom,font=("Arial",10,"bold"),textvariable=name).pack(side=TOP, padx=10, fill=X)
+    Label(LFrom, text="Contact ", font=("Arial", 12)).pack(side=TOP)
+    Entry(LFrom, font=("Arial", 10, "bold"),textvariable=contact).pack(side=TOP, padx=10, fill=X)
+    Label(LFrom, text="Email ", font=("Arial", 12)).pack(side=TOP)
+    Entry(LFrom, font=("Arial", 10, "bold"),textvariable=email).pack(side=TOP, padx=10, fill=X)
+    Label(LFrom, text="Rollno ", font=("Arial", 12)).pack(side=TOP)
+    Entry(LFrom, font=("Arial", 10, "bold"),textvariable=rollno).pack(side=TOP, padx=10, fill=X)
+    Label(LFrom, text="Branch ", font=("Arial", 12)).pack(side=TOP)
+    Entry(LFrom, font=("Arial", 10, "bold"),textvariable=branch).pack(side=TOP, padx=10, fill=X)
+    Button(LFrom,text="Submit",font=("Arial", 10, "bold"),command=register).pack(side=TOP, padx=10,pady=5, fill=X)
+
+    #creating search label and entry in second frame
+    lbl_txtsearch = Label(LeftViewForm, text="Enter name to Search", font=('verdana', 10),bg="gray")
+    lbl_txtsearch.pack()
+    #creating search entry
+    search = Entry(LeftViewForm, textvariable=SEARCH, font=('verdana', 15), width=10)
+    search.pack(side=TOP, padx=10, fill=X)
+    #creating search button
+    btn_search = Button(LeftViewForm, text="Search", command=SearchRecord)
+    btn_search.pack(side=TOP, padx=10, pady=10, fill=X)
+    #creating view button
+    btn_view = Button(LeftViewForm, text="View All", command=DisplayData)
+    btn_view.pack(side=TOP, padx=10, pady=10, fill=X)
+    #creating reset button
+    btn_reset = Button(LeftViewForm, text="Reset", command=Reset)
+    btn_reset.pack(side=TOP, padx=10, pady=10, fill=X)
+    #creating delete button
+    btn_delete = Button(LeftViewForm, text="Delete", command=Delete)
+    btn_delete.pack(side=TOP, padx=10, pady=10, fill=X)
+   #setting scrollbar
+    scrollbarx = Scrollbar(MidViewForm, orient=HORIZONTAL)
+    scrollbary = Scrollbar(MidViewForm, orient=VERTICAL)
+    tree = ttk.Treeview(MidViewForm,columns=("Student Id", "Name", "Contact", "Email","Rollno","Branch"),
+                        selectmode="extended", height=100, yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set)
+    scrollbary.config(command=tree.yview)
+    scrollbary.pack(side=RIGHT, fill=Y)
+    scrollbarx.config(command=tree.xview)
+    scrollbarx.pack(side=BOTTOM, fill=X)
+    #setting headings for the columns
+    tree.heading('Student Id', text="Student Id", anchor=W)
+    tree.heading('Name', text="Name", anchor=W)
+    tree.heading('Contact', text="Contact", anchor=W)
+    tree.heading('Email', text="Email", anchor=W)
+    tree.heading('Rollno', text="Rollno", anchor=W)
+    tree.heading('Branch', text="Branch", anchor=W)
+    #setting width of the columns
+    tree.column('#0', stretch=NO, minwidth=0, width=0)
+    tree.column('#1', stretch=NO, minwidth=0, width=100)
+    tree.column('#2', stretch=NO, minwidth=0, width=150)
+    tree.column('#3', stretch=NO, minwidth=0, width=80)
+    tree.column('#4', stretch=NO, minwidth=0, width=120)
+    tree.pack()
+    DisplayData()
