@@ -171,3 +171,24 @@ def SearchRecord():
             tree.insert('', 'end', values=(data))
         cursor.close()
         conn.close()
+#defining function to access data from SQLite database
+def DisplayData():
+    #open database
+    Database()
+    #clear current data
+    tree.delete(*tree.get_children())
+    #select query
+    cursor=conn.execute("SELECT * FROM STUD_REGISTRATION")
+    #fetch all data from database
+    fetch = cursor.fetchall()
+    #loop for displaying all data in GUI
+    for data in fetch:
+        tree.insert('', 'end', values=(data))
+    cursor.close()
+    conn.close()
+
+#calling function
+DisplayForm()
+if __name__=='__main__':
+#Running Application
+ mainloop()
