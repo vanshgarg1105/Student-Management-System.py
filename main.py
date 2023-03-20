@@ -136,3 +136,38 @@ def Reset():
     email.set("")
     rollno.set("")
     branch.set("")
+def Delete():
+    #open database
+    Database()
+    if not tree.selection():
+        tkMessageBox.showwarning("Warning","Select data to delete")
+    else:
+        result = tkMessageBox.askquestion('Confirm', 'Are you sure you want to delete this record?',
+                                          icon="warning")
+        if result == 'yes':
+            curItem = tree.focus()
+            contents = (tree.item(curItem))
+            selecteditem = contents['values']
+            tree.delete(curItem)
+            cursor=conn.execute("DELETE FROM STUD_REGISTRATION WHERE STU_ID = %d" % selecteditem[0])
+            conn.commit()
+            cursor.close()
+            conn.close()
+
+#function to search data
+def SearchRecord():
+    #open database
+    Database()
+    #checking search text is empty or not
+    if SEARCH.get() != "":
+        #clearing current display data
+        tree.delete(*tree.get_children())
+        #select query with where clause
+        cursor=conn.execute("SELECT * FROM STUD_REGISTRATION WHERE STU_NAME LIKE ?", ('%' + str(SEARCH.get()) + '%',))
+        #fetch all matching records
+        fetch = cursor.fetchall()
+        #loop for displaying all records into GUI
+        for data in fetch:
+            tree.insert('', 'end', values=(data))
+        cursor.close()
+        conn.close()
